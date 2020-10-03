@@ -1,0 +1,11 @@
+h1 {
+    margin: auto;
+    color: #e7305b;
+    font-family: sans-serif;
+    font-size: 40px;
+}
+
+.logo {
+    width: 250px;
+    height: 160px;
+}
