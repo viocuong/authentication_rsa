@@ -4,5 +4,5 @@ from django.db import models
 class user(models.Model):
     name = models.CharField(max_length=40)
     email = models.CharField(max_length=100)
-    publicKey = models.Field(max_length= 500)
+    publicKey = models.Field(max_length= 200)
     
