@@ -1,4 +1,7 @@
+from django.http.response import HttpResponseRedirect
+from app.models import User
 from django.shortcuts import render
+from django.urls import reverse
 from django.http import HttpResponse as res,HttpResponseRedirect as redirect
 from Crypto.PublicKey import RSA
 from django.http import request
@@ -11,16 +14,29 @@ def index(request):
         "form":form
     })
 
-
 def home(request):
     return res("home")
-def greet(request, name):
+def greet(request, name): 
     return render(request, "app/greet.html", {
         "name": name
     })
-    
 def register(request):
-    return res("welcom register")
+    if request.method== 'POST':
+        form = FORMS.formRegister(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = User(name=data['name'],phone=data['phone'],email = data['email'],passWord=data['passWord'])
+            if user.email != User.objects.filter(email=user.email)['email']:
+                user.save()
+            else:
+                return res("<script>alert('tai khoan da ton tai')</script>")
+            
+            return HttpResponseRedirect(reverse('app:index'))
+        return
+    form =FORMS.formRegister()
+    return render(request,"app/register.html",{
+        "form":form
+    })
 def login(request):
     if request.method == 'POST':
         form = FORMS.formLogin(request.POST)
