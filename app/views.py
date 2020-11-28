@@ -13,9 +13,6 @@ def index(request):
     return render(request, "app/index.html",{
         "form":form
     })
-
-def home(request):
-    return res("home")
 def greet(request, name): 
     return render(request, "app/greet.html", {
         "name": name
@@ -26,11 +23,11 @@ def register(request):
         if form.is_valid():
             data = form.cleaned_data
             user = User(name=data['name'],phone=data['phone'],email = data['email'],passWord=data['passWord'])
-            if user.email != User.objects.filter(email=user.email)['email']:
+            try:
+                u =User.objects.filter(email=user.email).get().email
+                if ( u == user.name): return res("<script>alert('tai khoan da ton tai')</script>")
+            except User.DoesNotExist:
                 user.save()
-            else:
-                return res("<script>alert('tai khoan da ton tai')</script>")
-            
             return HttpResponseRedirect(reverse('app:index'))
         return
     form =FORMS.formRegister()
@@ -41,6 +38,10 @@ def login(request):
     if request.method == 'POST':
         form = FORMS.formLogin(request.POST)
         if form.is_valid():
-            return res("login success"+ '  '+form.cleaned_data['email'])
+            ins = form.cleaned_data
+            if User.objects.filter(email = ins['email'], passWord= ins['passWord']).exists()== True:
+                return HttpResponseRedirect(reverse("app:home"))    
     return render(request,'app/index.html',{'form':FORMS.formLogin()})
     #return res(request.POST.get("email"))
+def home(request):
+    return res("dang nhap thanh cong")
