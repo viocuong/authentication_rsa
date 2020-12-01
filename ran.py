@@ -12,7 +12,7 @@ print('curve:', curve)
 k = 0x03177b8a2a0fd674ff556aa7b8a7851f88bd53b2c1
 P = curve.g
 p = curve.field.p
-n = 120
+n = 10
 for i in range(1, n+1):
 	S = k * P
 	xn = S.x
@@ -28,4 +28,4 @@ for i in range(1, n+1):
 		k = xn + i%p
 	S1 = S
 
-print(hex(xn))
+#print(hex(xn))

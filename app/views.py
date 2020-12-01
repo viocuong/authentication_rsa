@@ -22,7 +22,7 @@ def register(request):
         form = FORMS.formRegister(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            user = User(name=data['name'],phone=data['phone'],email = data['email'],passWord=data['passWord'])
+            user = User(name=data['name'],phone=data['phone'],email = data['email'])
             try:
                 u =User.objects.filter(email=user.email).get().email
                 if ( u == user.name): return res("<script>alert('tai khoan da ton tai')</script>")
@@ -45,3 +45,5 @@ def login(request):
     #return res(request.POST.get("email"))
 def home(request):
     return res("dang nhap thanh cong")
+def success(request):
+    return res("dang ky ok ")
