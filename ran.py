@@ -16,6 +16,7 @@ n = 10
 for i in range(1, n+1):
 	S = k * P
 	xn = S.x
+	
 	if(xn == None):
 		yn1 = S1.y
 		k = yn1  + (i-1)%p
