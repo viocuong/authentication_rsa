@@ -14,7 +14,6 @@ def generateId(n):
     k = 0x03177b8a2a0fd674ff556aa7b8a7851f88bd53b2c1
     P = curve.g
     p = curve.field.p
-   
     for i in range(1, n+1):
         S = k * P
         xn = S.x
@@ -37,20 +36,14 @@ def generateKey():
     # print(f"Public key:  (n={hex(keyPair.n)}, e={hex(keyPair.e)})")
     # print(f"Private key: (n={hex(keyPair.n)}, d={hex(keyPair.d)})")
     return [keyPair.n, keyPair.e, keyPair.d]
-    # msg = b'A message for signing'
-    
-    # from hashlib import sha512
-    # hash = int.from_bytes(sha512(msg).digest(), byteorder='big')
-    # signature = pow(hash, keyPair.d, keyPair.n)
-    # print("Signature:", hex(signature))
 def encode(id, n , d):
-    hash = int.from_bytes(sha512(str(id).encode()).digest(), byteorder='big')
-    C = pow(hash, d, n)
+    #hash = int.from_bytes(sha512(str(id).encode()).digest(), byteorder='big')
+    C = pow(id, d, n)
     return C
 def decode(c,n , e):
     #hash = int.from_bytes(sha512( str(c).encode()).digest(), byteorder='big')
-    hashId = pow(c  , e , n)
-    return hashId
+    Id = pow(c  , e , n)
+    return Id
     # msg = b'A message for signing'
     # hash = int.from_bytes(sha512(msg).digest(), byteorder='big')
     # hashFromSignature = pow(signature, keyPair.e, keyPair.n)
